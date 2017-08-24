@@ -1,44 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-    Licensed under the Apache License, Version 2.0 (the "License");
-    you may not use this file except in compliance with the License.
-    You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing, software
-    distributed under the License is distributed on an "AS IS" BASIS,
-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-    See the License for the specific language governing permissions and
-    limitations under the License.
--->
 <unix-user-mapping serviceName="guacamole">
-    <!--
     <config name="RDP Connection" protocol="rdp">
         <param name="hostname" value="localhost" />
         <param name="username" value="${GUAC_USERNAME}" />
         <param name="password" value="${GUAC_PASSWORD}" />
     </config>
-    -->
 
-    <!--
     <config name="VNC Connection" protocol="vnc">
         <param name="hostname" value="localhost" />
         <param name="port" value="5901" />
         <param name="password" value="VNCPASS" />
     </config>
-    -->
 
-    <!--
     <user name="USERNAME">
         <config-ref name="RDP Connection" />
         <config-ref name="VNC Connection" />
     </user>
-    -->
 
-    <!--
     <group name="GROUPNAME">
         <config-ref name="RDP Connection" />
     </group>
-    -->
 </unix-user-mapping>
