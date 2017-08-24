@@ -1,0 +1,4 @@
+# The PAM configuration file for Guacamole logins
+
+@include common-auth
+@include common-account

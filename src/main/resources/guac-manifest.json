@@ -1,0 +1,12 @@
+{
+
+    "guacamoleVersion" : "0.9.13-incubating",
+
+    "name"      : "PAM Authentication Extension",
+    "namespace" : "guac-pam",
+
+    "authProviders" : [
+        "com.andreasvoegele.guacamole.auth.unix.PAMAuthenticationProvider"
+    ]
+
+}
