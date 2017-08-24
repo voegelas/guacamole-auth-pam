@@ -112,6 +112,23 @@ public class UserMapping {
     }
 
     /**
+     * Checks if any user or group references a non-existing configuration.
+     *
+     * @return a collection of missing configurations
+     */
+    Collection<String> getMissingConfigurations() {
+        Set<String> missingConfigNames = new HashSet<String>();
+        for (Set<String> configNames : userNameToConfigNames.values()) {
+            missingConfigNames.addAll(configNames);
+        }
+        for (Set<String> configNames : groupNameToConfigNames.values()) {
+            missingConfigNames.addAll(configNames);
+        }
+        missingConfigNames.removeAll(configNameToConfig.keySet());
+        return missingConfigNames;
+    }
+
+    /**
      * Returns the specified user's Guacamole configurations.
      *
      * @param userName

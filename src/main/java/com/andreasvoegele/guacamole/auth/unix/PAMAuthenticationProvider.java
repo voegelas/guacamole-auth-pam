@@ -95,9 +95,12 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
     }
 
     /**
-     * XXX
+     * Reads and parses the configuration file.
      *
-     * @return
+     * Rereads the configuration file if the file was modified.
+     *
+     * @return a UserMapping, which maps users and groups to connection
+     *         configurations.
      * @throws GuacamoleException
      */
     private UserMapping getUserMapping() {
@@ -124,9 +127,12 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
                     parser.parse(new InputSource(reader));
                     reader.close();
 
-                    // XXX Warn if unknown config names.
                     lastModified = userMappingFile.lastModified();
                     cachedUserMapping = contentHandler.asUserMapping();
+
+                    for (String configName : cachedUserMapping.getMissingConfigurations()) {
+                        logger.warn("Non-existing config referenced in user mapping file \"{}\": {}", userMappingFile, configName);
+                    }
 
                 } catch (IOException e) {
                     logger.warn("Unable to read user mapping file \"{}\": {}", userMappingFile, e.getMessage());
