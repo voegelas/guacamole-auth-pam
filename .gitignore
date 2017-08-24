@@ -1,3 +1,6 @@
+*~
+*.swp
+
 target/
 pom.xml.tag
 pom.xml.releaseBackup
