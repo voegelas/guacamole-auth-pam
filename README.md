@@ -59,7 +59,7 @@ Building the extension requires Apache Maven.
 
 ## LICENSE AND COPYRIGHT
 
-Copyright 2017 Andreas Voegele
+Copyright 2017 Andreas Vögele
 
 This extension is free software; you can redistribute it and/or modify it
 under the terms of the Apache 2.0 license.
