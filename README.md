@@ -22,7 +22,7 @@ Create the file /etc/pam.d/guacamole. Example for Debian/Ubuntu:
 ```
 
 If PAM uses
-[pam_unix(8)](https://manpages.debian.org/stable/libpam-modules/pam_unix.8.en.html)
+[pam_unix(8)](https://manpages.debian.org/unstable/libpam-modules/pam_unix.8.en.html)
 with shadow passwords, add the Tomcat user to the "shadow" group.
 Example:
 
