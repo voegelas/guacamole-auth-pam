@@ -21,8 +21,8 @@ Create the file /etc/pam.d/guacamole. Example for Debian/Ubuntu:
 @include common-account
 ```
 
-If PAM uses pam_unix(8) with shadow passwords, add the Tomcat user to the
-"shadow" group.  Example:
+Add the Tomcat user to the "shadow" group if you would like to authenticate
+Guacamole users with pam_unix(8):
 
 ```
 usermod -a -G shadow tomcat8
