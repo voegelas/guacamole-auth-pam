@@ -1,8 +1,8 @@
 # guacamole-auth-pam
 
-Guacamole provides access to remote desktops from your web browser.  See
-https://guacamole.incubator.apache.org/ for information on Guacamole.  The
-guacamole-auth-pam extension allows you to log into Guacamole with PAM.
+[Guacamole](https://guacamole.incubator.apache.org/) provides access to
+remote desktops from your web browser.  The guacamole-auth-pam extension
+allows you to log into Guacamole with PAM.
 
 ## INSTALLATION
 
@@ -19,6 +19,15 @@ Create the file /etc/pam.d/guacamole. Example for Debian/Ubuntu:
 ```
 @include common-auth
 @include common-account
+```
+
+If PAM uses
+[pam_unix(8)](https://manpages.debian.org/stable/libpam-modules/pam_unix.8.en.html)
+with shadow passwords, add the Tomcat user to the "shadow" group.
+Example:
+
+```
+usermod -a -G shadow tomcat8
 ```
 
 Create the file GUACAMOLE_HOME/unix-user-mapping.xml. Add connection
