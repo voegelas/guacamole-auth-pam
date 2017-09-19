@@ -152,6 +152,8 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
     @Override
     public Map<String, GuacamoleConfiguration> getAuthorizedConfigurations(Credentials cred) throws GuacamoleException {
 
+        Map<String, GuacamoleConfiguration> configs = null;
+
         // Abort authorization if no configuration exists
         UserMapping userMapping = getUserMapping();
         if (userMapping == null)
@@ -162,14 +164,17 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
             String serviceName = userMapping.getServiceName();
             String userName = cred.getUsername();
             UnixUser user = new PAM(serviceName).authenticate(userName, cred.getPassword());
-            if (user != null)
-                return userMapping.getConfigurations(userName, user.getGroups());
+            if (user != null) {
+                configs = userMapping.getConfigurations(userName, user.getGroups());
+                if (configs.isEmpty()) {
+                    logger.warn("No configurations found for user: {}", userName);
+                }
+            }
         } catch (PAMException e) {
             // Fall through
         }
 
-        // Unauthorized
-        return null;
+        return configs;
 
     }
 
