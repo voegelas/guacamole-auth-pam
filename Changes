@@ -1,0 +1,10 @@
+Revision history for guacamole-auth-pam
+
+1.1  2017-11-03 19:27:12 CET
+
+  - Log a warning if no configuration is assigned to a user.
+
+1.0  2017-08-25 09:05:09 CEST
+
+  - First version, released on an unsuspecting world.
+
