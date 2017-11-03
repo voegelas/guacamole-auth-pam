@@ -1,8 +1,8 @@
 # guacamole-auth-pam
 
-[Guacamole](https://guacamole.incubator.apache.org/) provides access to
-remote desktops from your web browser.  The guacamole-auth-pam extension
-allows you to log into Guacamole with PAM.
+[Guacamole](https://guacamole.incubator.apache.org/) provides access to remote
+desktops from your web browser.  This extension allows you to log into
+Guacamole with PAM.
 
 ## INSTALLATION
 
@@ -17,6 +17,7 @@ cp target/guacamole-auth-pam-*.jar /etc/guacamole/extensions
 Create the file /etc/pam.d/guacamole. Example for Ubuntu:
 
 ```
+#%PAM-1.0
 @include common-auth
 @include common-account
 ```
@@ -36,15 +37,18 @@ Reference the configurations from user and group elements.  Example:
 <?xml version="1.0" encoding="UTF-8"?>
 <unix-user-mapping serviceName="guacamole">
     <config name="RDP Connection" protocol="rdp">
-        <param name="hostname" value="localhost" />
+        <param name="hostname" value="client.example.com" />
         <param name="username" value="${GUAC_USERNAME}" />
         <param name="password" value="${GUAC_PASSWORD}" />
+        <param name="domain" value="EXAMPLE" />
+        <param name="security" value="nla" />
+        <param name="server-layout" value="en-us-qwerty" />
     </config>
 
     <config name="VNC Connection" protocol="vnc">
         <param name="hostname" value="localhost" />
         <param name="port" value="5901" />
-        <param name="password" value="VNCPASS" />
+        <param name="password" value="secret" />
     </config>
 
     <user name="andreas">
