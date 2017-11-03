@@ -14,7 +14,7 @@ mvn package
 cp target/guacamole-auth-pam-*.jar /etc/guacamole/extensions
 ```
 
-Create the file /etc/pam.d/guacamole. Example for Debian/Ubuntu:
+Create the file /etc/pam.d/guacamole. Example for Ubuntu:
 
 ```
 @include common-auth
@@ -22,7 +22,7 @@ Create the file /etc/pam.d/guacamole. Example for Debian/Ubuntu:
 ```
 
 Add the Tomcat user to the "shadow" group if you would like to authenticate
-Guacamole users with pam_unix(8):
+Guacamole users with the pam_unix(8) module:
 
 ```
 usermod -a -G shadow tomcat8
@@ -47,12 +47,12 @@ Reference the configurations from user and group elements.  Example:
         <param name="password" value="VNCPASS" />
     </config>
 
-    <user name="USERNAME">
+    <user name="andreas">
         <config-ref name="RDP Connection" />
         <config-ref name="VNC Connection" />
     </user>
 
-    <group name="GROUPNAME">
+    <group name="users">
         <config-ref name="RDP Connection" />
     </group>
 </unix-user-mapping>
@@ -68,7 +68,7 @@ Building the extension requires Apache Maven.
 
 Copyright 2017 Andreas Vögele
 
-This extension is free software; you can redistribute it and/or modify it
-under the terms of the Apache 2.0 license.
+This extension is free software; you can redistribute and modify it under the
+terms of the Apache 2.0 license.
 
 See https://www.apache.org/licenses/LICENSE-2.0 for more information.
