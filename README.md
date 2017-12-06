@@ -1,8 +1,8 @@
 # guacamole-auth-pam
 
-[Guacamole](https://guacamole.incubator.apache.org/) provides access to remote
-desktops from your web browser.  This extension allows you to log into
-Guacamole with PAM.
+[Guacamole](https://guacamole.apache.org/) provides access to remote desktops
+from your web browser.  This extension allows you to log into Guacamole with
+PAM.
 
 ## INSTALLATION
 
