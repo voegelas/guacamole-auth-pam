@@ -18,12 +18,13 @@
 
 package com.andreasvoegele.guacamole.auth.unix;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.guacamole.GuacamoleException;
 import org.apache.guacamole.GuacamoleServerException;
@@ -40,10 +41,7 @@ import org.jvnet.libpam.UnixUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-import org.xml.sax.helpers.XMLReaderFactory;
 
 /**
  * PAM authentication provider for Guacamole.
@@ -121,11 +119,8 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
 
                     UserMappingContentHandler contentHandler = new UserMappingContentHandler();
 
-                    XMLReader parser = XMLReaderFactory.createXMLReader();
-                    parser.setContentHandler(contentHandler);
-                    Reader reader = new BufferedReader(new FileReader(userMappingFile));
-                    parser.parse(new InputSource(reader));
-                    reader.close();
+                    SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
+                    parser.parse(userMappingFile, contentHandler);
 
                     lastModified = userMappingFile.lastModified();
                     cachedUserMapping = contentHandler.asUserMapping();
@@ -134,13 +129,16 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
                         logger.warn("Non-existing config referenced in user mapping file \"{}\": {}", userMappingFile, configName);
                     }
 
+                } catch (ParserConfigurationException e) {
+                    logger.warn("Unable to create parser for user mapping file \"{}\": {}", userMappingFile, e.getMessage());
+                    return null;
                 } catch (IOException e) {
                     logger.warn("Unable to read user mapping file \"{}\": {}", userMappingFile, e.getMessage());
                     return null;
                 } catch (SAXException e) {
                     logger.warn("User mapping file \"{}\" is not valid: {}", userMappingFile, e.getMessage());
                     return null;
-                }
+				}
 
             }
         }
