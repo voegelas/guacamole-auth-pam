@@ -70,7 +70,7 @@ Building the extension requires Apache Maven.
 
 ## LICENSE AND COPYRIGHT
 
-Copyright 2017 Andreas Vögele
+Copyright 2017-2018 Andreas Vögele
 
 This extension is free software; you can redistribute and modify it under the
 terms of the Apache 2.0 license.
