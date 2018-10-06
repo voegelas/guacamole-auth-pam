@@ -7,7 +7,7 @@ PAM.
 ## INSTALLATION
 
 Build the extension with Maven and copy the built JAR file to
-GUACAMOLE_HOME/extensions. Example:
+/etc/guacamole/extensions. Example:
 
 ```
 mvn package
@@ -23,13 +23,13 @@ Create the file /etc/pam.d/guacamole. Example for Ubuntu:
 ```
 
 Add the Tomcat user to the "shadow" group if you would like to authenticate
-Guacamole users with the pam_unix(8) module:
+Guacamole users with pam_unix(8), i.e. your local shadow password file:
 
 ```
 usermod -a -G shadow tomcat8
 ```
 
-Create the file GUACAMOLE_HOME/unix-user-mapping.xml. Add connection
+Create the file /etc/guacamole/unix-user-mapping.xml. Add connection
 configurations to the file. See the Guacamole manual for valid parameters.
 Reference the configurations from user and group elements.  Example:
 
