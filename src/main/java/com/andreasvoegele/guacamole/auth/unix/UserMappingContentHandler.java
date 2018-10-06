@@ -90,7 +90,7 @@ public class UserMappingContentHandler extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
-        if (localName.equals(rootTag)) {
+        if (qName.equals(rootTag)) {
 
             if (state.peek() != State.DOCUMENT)
                 throw new SAXException(rootTag + " cannot be nested.");
@@ -103,7 +103,7 @@ public class UserMappingContentHandler extends DefaultHandler {
 
         }
 
-        else if (localName.equals("config")) {
+        else if (qName.equals("config")) {
 
             if (state.peek() != State.TOP_LEVEL)
                 throw new SAXException("config cannot be nested.");
@@ -123,7 +123,7 @@ public class UserMappingContentHandler extends DefaultHandler {
 
         }
 
-        else if (localName.equals("param")) {
+        else if (qName.equals("param")) {
 
             if (state.peek() != State.CONFIG)
                 throw new SAXException("param without config");
@@ -141,7 +141,7 @@ public class UserMappingContentHandler extends DefaultHandler {
             state.push(State.PARAM);
         }
 
-        else if (localName.equals("user")) {
+        else if (qName.equals("user")) {
 
             if (state.peek() != State.TOP_LEVEL)
                 throw new SAXException("user cannot be nested.");
@@ -155,7 +155,7 @@ public class UserMappingContentHandler extends DefaultHandler {
             state.push(State.USER);
         }
 
-        else if (localName.equals("group")) {
+        else if (qName.equals("group")) {
 
             if (state.peek() != State.TOP_LEVEL)
                 throw new SAXException("group cannot be nested.");
@@ -169,7 +169,7 @@ public class UserMappingContentHandler extends DefaultHandler {
             state.push(State.GROUP);
         }
 
-        else if (localName.equals("config-ref")) {
+        else if (qName.equals("config-ref")) {
 
             if (state.peek() != State.USER && state.peek() != State.GROUP)
                 throw new SAXException("config-ref without user or group");
@@ -188,10 +188,10 @@ public class UserMappingContentHandler extends DefaultHandler {
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
 
-        if (localName.equals(rootTag))
+        if (qName.equals(rootTag))
             state.pop();
 
-        else if (localName.equals("config")) {
+        else if (qName.equals("config")) {
 
             userMapping.addConfig(configName, config);
 
@@ -202,10 +202,10 @@ public class UserMappingContentHandler extends DefaultHandler {
 
         }
 
-        else if (localName.equals("param"))
+        else if (qName.equals("param"))
             state.pop();
 
-        else if (localName.equals("user")) {
+        else if (qName.equals("user")) {
 
             userMapping.addUser(userOrGroupName, configNames);
 
@@ -216,7 +216,7 @@ public class UserMappingContentHandler extends DefaultHandler {
 
         }
 
-        else if (localName.equals("group")) {
+        else if (qName.equals("group")) {
 
             userMapping.addGroup(userOrGroupName, configNames);
 
@@ -227,7 +227,7 @@ public class UserMappingContentHandler extends DefaultHandler {
 
         }
 
-        else if (localName.equals("config-ref"))
+        else if (qName.equals("config-ref"))
             state.pop();
 
     }
