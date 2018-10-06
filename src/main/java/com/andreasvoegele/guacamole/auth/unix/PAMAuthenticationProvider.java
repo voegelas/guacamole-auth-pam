@@ -27,7 +27,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.guacamole.GuacamoleException;
-import org.apache.guacamole.GuacamoleServerException;
 import org.apache.guacamole.environment.Environment;
 import org.apache.guacamole.environment.LocalEnvironment;
 import org.apache.guacamole.net.auth.simple.SimpleAuthenticationProvider;
@@ -105,7 +104,7 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
 
         File userMappingFile = new File(environment.getGuacamoleHome(), USER_MAPPING_FILENAME);
         if (!userMappingFile.exists()) {
-            logger.debug("User mapping file \"{}\" does not exist and will not be read.", userMappingFile);
+            logger.error("User mapping file \"{}\" does not exist.", userMappingFile);
             return null;
         }
 
@@ -113,7 +112,7 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
 
             synchronized (this) {
 
-                logger.debug("Reading user mapping file: \"{}\"", userMappingFile);
+                logger.debug("Reading user mapping file \"{}\".", userMappingFile);
 
                 try {
 
@@ -130,13 +129,13 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
                     }
 
                 } catch (ParserConfigurationException e) {
-                    logger.warn("Unable to create parser for user mapping file \"{}\": {}", userMappingFile, e.getMessage());
+                    logger.error("Unable to create parser for user mapping file \"{}\": {}", userMappingFile, e.getMessage());
                     return null;
                 } catch (IOException e) {
-                    logger.warn("Unable to read user mapping file \"{}\": {}", userMappingFile, e.getMessage());
+                    logger.error("Unable to read user mapping file \"{}\": {}", userMappingFile, e.getMessage());
                     return null;
                 } catch (SAXException e) {
-                    logger.warn("User mapping file \"{}\" is not valid: {}", userMappingFile, e.getMessage());
+                    logger.error("User mapping file \"{}\" is not valid: {}", userMappingFile, e.getMessage());
                     return null;
 				}
 
@@ -152,24 +151,22 @@ public class PAMAuthenticationProvider extends SimpleAuthenticationProvider {
 
         Map<String, GuacamoleConfiguration> configs = null;
 
-        // Abort authorization if no configuration exists
         UserMapping userMapping = getUserMapping();
-        if (userMapping == null)
-            throw new GuacamoleServerException("Configuration could not be read.");
-
-        // Validate user and return the associated connections
-        try {
-            String serviceName = userMapping.getServiceName();
-            String userName = cred.getUsername();
-            UnixUser user = new PAM(serviceName).authenticate(userName, cred.getPassword());
-            if (user != null) {
-                configs = userMapping.getConfigurations(userName, user.getGroups());
-                if (configs.isEmpty()) {
-                    logger.warn("No configurations found for user: {}", userName);
+        if (userMapping != null) {
+            // Validate user and return the associated connections
+            try {
+                String serviceName = userMapping.getServiceName();
+                String userName = cred.getUsername();
+                UnixUser user = new PAM(serviceName).authenticate(userName, cred.getPassword());
+                if (user != null) {
+                    configs = userMapping.getConfigurations(userName, user.getGroups());
+                    if (configs.isEmpty()) {
+                        logger.info("No connections configured for user \"{}\".", userName);
+                    }
                 }
+            } catch (PAMException e) {
+                // Fall through
             }
-        } catch (PAMException e) {
-            // Fall through
         }
 
         return configs;
