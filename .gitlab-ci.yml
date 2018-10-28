@@ -10,7 +10,5 @@ cache:
 
 build:
   stage: build
-  tags:
-    - maven
   script:
     - mvn $MAVEN_CLI_OPTS package
