@@ -4,11 +4,12 @@ variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
   MAVEN_OPTS: "-Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN -Dorg.slf4j.simpleLogger.showDateTime=true -Djava.awt.headless=true"
 
-cache:
-  paths:
-    - target/
-
 build:
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS package
+  artifacts:
+    name: "$CI_PROJECT_NAME"
+    paths:
+      - 'target/*.jar'
+    expire_in: 1 week
