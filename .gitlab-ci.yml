@@ -1,4 +1,4 @@
-image: maven:3-jdk-8-alpine
+image: maven:3-jdk-11-alpine
 
 variables:
   MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
