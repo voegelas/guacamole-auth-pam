@@ -1,7 +1,7 @@
 /*
  * XML parser for unix-user-mapping.xml
  *
- * Copyright 2017-2019 Andreas Voegele
+ * Copyright 2017-2020 Andreas Voegele
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.

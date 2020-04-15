@@ -1,5 +1,9 @@
 Revision history for guacamole-auth-pam
 
+1.5  2020-04-15 12:44:12 CET
+
+  - Update for Guacamole 1.1.0.
+
 1.4  2019-02-01 18:48:11 CET
 
   - Update for Guacamole 1.0.0.
